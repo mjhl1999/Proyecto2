@@ -4,7 +4,7 @@
 import sqlite3
 
 #Connect with database
-conn = sqlite3.connect("songs.db")
+conn = sqlite3.connect("rolas.db")
 
 #Query cursor
 c = conn.cursor()
@@ -12,6 +12,11 @@ c = conn.cursor()
 c.execute('''CREATE TABLE IF NOT EXISTS types(
              id_type      INTEGER PRIMARY KEY,
              description   TEXT)''')
+
+c.execute('''CREATE TABLE IF NOT EXISTS types(
+             id_type      INTEGER PRIMARY KEY,
+             description   TEXT)''')
+
 
 c.execute("INSERT INTO types VALUES(0,'Person')")
 c.execute("INSERT INTO types VALUES(1,'Group')")
@@ -23,9 +28,14 @@ c.execute('''CREATE TABLE performers(
             name           TEXT,
             FOREIGN KEY (id_type) REFERENCES types(id_type))''')
 
+c.execute('''CREATE TABLE performers(
+            id_performer   INTEGER PRIMARY KEY,
+            id_type        INTEGER,
+            name           TEXT,
+            FOREIGN KEY (id_type) REFERENCES types(id_type))''')
+
 
 c.execute('''CREATE TABLE persons(
-            id_person      INTEGER PRIMARY KEY,
             stage_name      TEXT,
             real_name       TEXT,
             birth_date      TEXT,
@@ -61,3 +71,6 @@ c.execute('''CREATE TABLE in_group(
              PRIMARY KEY   (id_person, id_group),
              FOREIGN KEY   (id_person) REFERENCES persons(id_person),
              FOREIGN KEY   (id_group) REFERENCES  groups(id_group))''')
+
+
+c.execute('''INSERT INTO persons VALUES(Miren', 'Maria', '19 de octubre', 'pronto')''')
